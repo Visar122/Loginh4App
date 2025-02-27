@@ -1,0 +1,18 @@
+button {
+    background: #ff8c00; /* ✅ Orange Button */
+    color: white;
+    font-size: 18px;
+
+
+    padding:8px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    margin-top: 12px;
+  }
+  button:hover {
+    background: #e67600;
+    transform: scale(1.05);
+    box-shadow: 0px 4px 10px rgba(255, 140, 0, 0.3);
+  }

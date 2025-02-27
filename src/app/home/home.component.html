@@ -1,0 +1,4 @@
+<h1>Welcome, {{ userName }}</h1>
+<h3 *ngIf="userStatus === 'admin'">You are logged in as an Admin</h3>
+<h2 *ngIf="userStatus === 'user'">You are logged in as a User</h2>
+<button (click)="logout()">Logout</button> 
