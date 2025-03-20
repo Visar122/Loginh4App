@@ -38,6 +38,7 @@ export class AppComponent {
     name: '',
     email: '',
     password: '',
+    cpr: '',
     status: 'user', // Default status is 'user'
   };
 
@@ -84,56 +85,34 @@ export class AppComponent {
   }
 
   SignUp() {
-    if (!this.signUpData.name || !this.signUpData.email || !this.signUpData.password) {
-      this.SignupError = 'Please fill in all required fields';
-      setTimeout(() => (this.SignupError = ''), 2000);
-      return;
-    }
-
-    const password = this.signUpData.password;
-
-    // Password validation
-    if (password.length < 8) {
-      this.SignupError = 'Password must be at least 8 characters long';
-      setTimeout(() => (this.SignupError = ''), 2000);
-      return;
-    }
-    if (!/[A-Z]/.test(password)) {
-      this.SignupError = 'Password must contain at least one uppercase letter';
-      setTimeout(() => (this.SignupError = ''), 2000);
-      return;
-    }
-    if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
-      this.SignupError = 'Password must contain at least one special character (!@#$%^&*)';
-      setTimeout(() => (this.SignupError = ''), 2000);
-      return;
+    if (!this.signUpData.name || !this.signUpData.email || !this.signUpData.password || !this.signUpData.cpr) {
+        this.SignupError = 'Please fill in all required fields, including CPR';
+        setTimeout(() => (this.SignupError = ''), 2000);
+        return;
     }
 
     console.log(' Sending Sign-Up Request:', this.signUpData); // Debugging log
 
-    // Send sign-up request
     this.Userlogin.UserSignUp(this.signUpData).subscribe({
-      next: () => {
-        console.log(' Sign-Up Successful!');
-        this.UserCreated = 'Account Successfully Created';
-        setTimeout(() => {
-          this.UserCreated = '';
-          this.isSigningUp = false;
-        }, 1000);
-      },
-      error: (err) => {
-        console.error(' Sign-Up API Error:', err);
-
-        if (err.status === 409) {
-          this.SignupError = err.error?.message || 'User already exists';
-        } else if (err.status === 400) {
-          this.SignupError = err.error?.message || 'Invalid data sent to the server';
-        } else {
-          this.SignupError = `User with this Name or Email already exists`;
+        next: () => {
+            console.log('✅ Sign-Up Successful!');
+            this.UserCreated = 'Account Successfully Created';
+            setTimeout(() => {
+                this.UserCreated = '';
+                this.isSigningUp = false;
+            }, 1000);
+        },
+        error: (err) => {
+            console.error('❌ Sign-Up API Error:', err);
+            if (err.status === 409) {
+                this.SignupError = 'User already exists';
+            } else {
+                this.SignupError = 'An error occurred during signup';
+            }
+            setTimeout(() => (this.SignupError = ''), 3000);
         }
-
-        setTimeout(() => (this.SignupError = ''), 3000);
-      },
     });
-  }
 }
+
+  }
+

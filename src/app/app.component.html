@@ -13,9 +13,13 @@
   <form *ngIf="isSigningUp" (ngSubmit)="SignUp()">
     <input type="text" [(ngModel)]="signUpData.name" name="name" placeholder="Full Name" required />
     <input type="email" [(ngModel)]="signUpData.email" name="email" placeholder="Email" required />
+    <input type="text" [(ngModel)]="signUpData.cpr" name="cpr" placeholder="CPR Number" required />
     <input type="password" [(ngModel)]="signUpData.password" name="password" placeholder="Password" required />
+   
+
     <button class="btn1" type="submit">Sign Up</button>
-  </form>
+</form>
+
   <p *ngIf="SignupError">{{ SignupError }}</p>
   <p *ngIf="UserCreated" style="color: green;">{{ UserCreated }}</p>
 
